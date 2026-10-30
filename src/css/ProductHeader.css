@@ -1,0 +1,19 @@
+.product-header {
+    margin-top: 3.5rem;
+}
+
+.product-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.right-product-header {
+    display: flex;
+    list-style: none;
+    column-gap: 1rem;
+}
+
+.right-product-header li{
+    cursor: pointer;
+}

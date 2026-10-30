@@ -1,0 +1,28 @@
+.product-info-detail{
+    margin-top: 10px;
+}
+.product-img{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+.product-img img{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #E8E8E8;
+    width: 90px;
+    height: 100px;
+}
+.thumbnail-img img{
+    background-color: #E8E8E8;
+     border-radius: 10px;
+     width: 350px;
+     height: 322px;
+
+}
+.product-image-section{
+    display: flex;
+    column-gap: 20px;
+   
+}

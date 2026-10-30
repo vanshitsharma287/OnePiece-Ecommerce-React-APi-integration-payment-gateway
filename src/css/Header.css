@@ -1,0 +1,38 @@
+header nav h1{
+    color: #272C26;
+}
+
+header nav ul li{
+    color:#A2A29E;
+    list-style: none;
+    cursor: pointer;
+}
+header nav ul li:hover{
+    color:#c2c2ab;
+
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.nav-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-icons li select{
+    outline: none;
+    background: transparent;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+

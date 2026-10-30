@@ -1,0 +1,33 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.main-container {
+  font-family: 'Inter', sans-serif;
+  color: #A2A29E;
+  background-color: #FBFAF6;
+  height: auto;
+  min-height: 100vh;
+
+}
+
+h1, h2, h3, .logo {
+  font-family: 'Manrope', sans-serif;
+}
+
+.home, .product-info {
+  padding: 0.8rem 2rem;
+}
+.breadcrumb-list {
+    display: flex;
+    column-gap: 2.3rem;
+}
+
+.breadcrumb-list #list {
+    list-style: none;
+}
+.product-info .breadcrumb {
+  margin-top: 3.5rem;
+}
