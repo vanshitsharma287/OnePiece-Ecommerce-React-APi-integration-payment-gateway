@@ -1,6 +1,7 @@
- import "../css/ProductInfoDetail.css";
+import { useState } from "react";
+import "../css/ProductInfoDetail.css";
 
- const product = {
+const product = {
     "id": 10,
     "title": "Gucci Bloom Eau de",
     "description": "Gucci Bloom by Gucci is a floral and captivating fragrance, with notes of tuberose, jasmine, and Rangoon creeper. It's a modern and romantic scent.",
@@ -63,43 +64,88 @@
     "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp"
 };
 
- const ProductInfoDetail = () => {
+const ProductInfoDetail = () => {
+    const [currentImg, setCurrentImg] = useState({img: product.thumbnail, index: 0});
 
-      const calculateOriginalPrice = ()=> {
-            const originalPrice = product.price / (1 - (product.discountPercentage / 100));
-            return originalPrice.toFixed(2);
-      }
+    const calculateOriginalPrice = () => {
+        const originalPrice = product.price / (1 - (product.discountPercentage / 100));
+        return originalPrice.toFixed(2);
+    }
 
-    return(
-          <section className="product-info-detail">
-            <div className="product-image-section">
-                  <div className="product-img">
-                        {/* {product.images.map() } */}
-                        <img src={product.images[0]} alt="product Img" />
-                        <img src={product.images[1]} alt="product Img" />
-                        <img src={product.images[2]} alt="product Img" />
-                  </div>
-                  <div className="thumbnail-img">
-                        <img src={product.thumbnail} alt="thumbnail Img" />
-                  </div>
-            </div>
-            <div className="product-details-section">
-                  <h2>{product.title}</h2>
-                  <small>{product.brand}</small>
-                  <div className="rating-review">
+
+    return (
+        <section className="product-info-section">
+            <div className="product-info-details">
+                <div className="img-section">
+                    <div className="product-img">
+                        {product.images.map((img, index) => (
+                          <img className={index == currentImg.index ? "active":""} src={img} alt="product Img" onClick={() => setCurrentImg({"img":img, "index": index})} />
+                        )) }
+                     
+                    </div>
+
+                    <div className="thumbnail-img">
+                        <img src={currentImg.img} alt="thumbnail Img" />
+                    </div>
+                </div>
+
+                <div className="product-details-section">
+                    <h2>{product.title}</h2>
+                    <small id="brand">{product.brand}</small>
+                    <div className="rating-review">
                         <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         <span>{product.rating}</span>
                         <span>({product.reviews.length} reviews)</span>
-                  </div>
-                  <div className="price">
+                    </div>
+                    <div className="price">
                         <strong>${product.price} </strong>
                         <span>${calculateOriginalPrice()}</span>
-                        <span> {product.discountPercentage}% OFF</span>
-                  </div>
+                        <span id="discount"> {product.discountPercentage.toFixed(0)}% OFF</span>
+                    </div>
+                    <div className="availability">
+                        <span style={{color: product.availabilityStatus == "In Stock" ? "green": "red"}} id="dot">&bull;</span>
+                        <span>Availability : <span style={{color: product.availabilityStatus == "In Stock" ? "green": "red"}}>{product.availabilityStatus}</span></span>
+                          
+                    </div>
+                    <div className="product-description">
+                        <p>{product.description}</p>
+                    </div>
+                    <div className="shipping-return-info">
+                        <div className="shipping-details">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <div className="shipping-info">
+                                <strong>Free Shipping</strong>
+                                <small>on orders over $50</small>
+                            </div>
+                        </div>
+                        <div className="return-details">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                            <div className="return-info">
+                                <strong>7 Days Return</strong>
+                                <small>Easy return policy</small>
+                            </div>
+                        </div>
+                        <div className="payment-details">
+                            <i class="fa-solid fa-shield"></i>
+                            <div className="payment-info">
+                                <strong>Secure Payments</strong>
+                                <small>100% secure</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {product.availabilityStatus == "In Stock" ? <div className="btns">
+                        <button><i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
+                        <button id="buyNow-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
+
+                    </div> : <button className="notify-me">Notify Me</button>}
+
+                
+                </div>
             </div>
 
-          </section>
+        </section>
 
     )
- }
- export default ProductInfoDetail;
+}
+export default ProductInfoDetail;

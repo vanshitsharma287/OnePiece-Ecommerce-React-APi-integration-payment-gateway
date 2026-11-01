@@ -21,9 +21,9 @@ const Header = () => {
                         <option>Euro €</option>
                     </select>
                 </li>
-                <li><i class="fa-solid fa-magnifying-glass"></i></li>
-                <li><i class="fa-regular fa-user"></i></li>
-                <li><i class="fa-solid fa-bag-shopping"></i> (2)</li>
+                <li><i className="fa-solid fa-magnifying-glass"></i></li>
+                <li><i className="fa-regular fa-user"></i></li>
+                <li><i className="fa-solid fa-bag-shopping"></i> (2)</li>
             </ul>
 
             </nav> 

@@ -35,4 +35,13 @@ nav {
     padding: 0.5rem;
     border-radius: 10px;
 }
+@media (max-width: 768px) {
+    nav{
+        flex-direction: column;
+        gap: 10px;
+    }
+    header nav h1{
+        order: -1;
+    }
+}
 
