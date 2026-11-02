@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "../css/ProductInfoDetail.css";
 import { useParams } from "react-router";
 import ProductSpecs from "./ProductSpecs";
-const MENU_ITEMS=["Specification", "Reviews"];
+import ProductReviews from "./ProductReviews";
+const MENU_ITEMS=["Specification", `Reviews`];
 
 const ProductInfoDetail = () => {
     const [product, setProduct] = useState({});
@@ -140,13 +141,14 @@ const ProductInfoDetail = () => {
             <div className="product-meta-info">
                 <div className="menu-tabs">
                     {MENU_ITEMS.map((item, index)=>(
-                      <button onClick={() => setActiveTab(index)}  className={index == activeTab ? "active" : ""}>{item}</button>
+                      <button onClick={() => setActiveTab(index)}  className={index == activeTab ? "active" : ""}>{item == "Reviews" ? `${item} (${product.reviews.length})` : item}</button>
                     ))}
                     
                 </div>
                     <hr/>
 
-                  <ProductSpecs product={product} />
+                  {/* <ProductSpecs product={product} /> */}
+                  <ProductReviews product={product} />
 
             </div>
             
