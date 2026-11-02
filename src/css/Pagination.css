@@ -3,6 +3,7 @@
     justify-content: center;
     margin-block: 4rem 1.5rem;
     gap: 35px;
+    flex-wrap: wrap;
 }
 .pagination button{
     border: none;

@@ -1,0 +1,57 @@
+table {
+    width: 70%;
+    border-collapse: collapse;
+    border: solid 1px ;
+}
+
+#table-header {
+    text-align: left;
+    padding: 15px;
+    color: #13264D;
+    font-size: 1.3rem;
+}
+
+td, th {
+    padding: 12px 15px;
+    color: #55617B;
+    border: 1px solid #ddd;
+}
+tbody tr td:nth-child(1) {
+    background-color: #f0f1f3;
+}
+.product-specs{
+    display: flex;
+    align-items: flex-start;
+    margin-top: 1rem;
+    gap:3rem;
+}
+.key-features{
+    background-color: #EDF4FD;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.key-features h2{
+    color: #233C91;
+}
+.icon{
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+}
+.icon i{
+   color: #03A6A7;
+}
+@media (max-width: 768px){
+    .product-specs{
+        flex-direction: column;
+    }
+    .product-specs table{
+        width: 100%;
+    }
+    
+
+    
+}

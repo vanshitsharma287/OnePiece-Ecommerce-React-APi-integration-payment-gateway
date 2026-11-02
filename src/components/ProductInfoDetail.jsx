@@ -1,87 +1,80 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/ProductInfoDetail.css";
-
-const product = {
-    "id": 10,
-    "title": "Gucci Bloom Eau de",
-    "description": "Gucci Bloom by Gucci is a floral and captivating fragrance, with notes of tuberose, jasmine, and Rangoon creeper. It's a modern and romantic scent.",
-    "category": "fragrances",
-    "price": 79.99,
-    "discountPercentage": 14.39,
-    "rating": 2.74,
-    "stock": 91,
-    "tags": [
-        "fragrances",
-        "perfumes"
-    ],
-    "brand": "Gucci",
-    "sku": "FRA-GUC-GUC-010",
-    "weight": 7,
-    "dimensions": {
-        "width": 20.92,
-        "height": 21.68,
-        "depth": 11.2
-    },
-    "warrantyInformation": "6 months warranty",
-    "shippingInformation": "Ships overnight",
-    "availabilityStatus": "In Stock",
-    "reviews": [
-        {
-            "rating": 1,
-            "comment": "Very dissatisfied!",
-            "date": "2025-04-30T09:41:02.053Z",
-            "reviewerName": "Cameron Perez",
-            "reviewerEmail": "cameron.perez@x.dummyjson.com"
-        },
-        {
-            "rating": 5,
-            "comment": "Very happy with my purchase!",
-            "date": "2025-04-30T09:41:02.053Z",
-            "reviewerName": "Daniel Cook",
-            "reviewerEmail": "daniel.cook@x.dummyjson.com"
-        },
-        {
-            "rating": 4,
-            "comment": "Highly impressed!",
-            "date": "2025-04-30T09:41:02.053Z",
-            "reviewerName": "Addison Wright",
-            "reviewerEmail": "addison.wright@x.dummyjson.com"
-        }
-    ],
-    "returnPolicy": "No return policy",
-    "minimumOrderQuantity": 2,
-    "meta": {
-        "createdAt": "2026-07-19T20:10:42.419Z",
-        "updatedAt": "2026-07-27T15:21:17.071Z",
-        "barcode": "3170832177880",
-        "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
-    },
-    "images": [
-        "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/1.webp",
-        "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/2.webp",
-        "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/3.webp"
-    ],
-    "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp"
-};
+import { useParams } from "react-router";
+import ProductSpecs from "./ProductSpecs";
+const MENU_ITEMS=["Specification", "Reviews"];
 
 const ProductInfoDetail = () => {
-    const [currentImg, setCurrentImg] = useState({img: product.thumbnail, index: 0});
+    const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState(0);
+    const {id} = useParams();
+
+    const [currentImg, setCurrentImg] = useState({ img: null, index: 0 });
 
     const calculateOriginalPrice = () => {
         const originalPrice = product.price / (1 - (product.discountPercentage / 100));
         return originalPrice.toFixed(2);
     }
 
+    const getProduct = async () => {
+        try {
+            const result = await fetch(`https://dummyjson.com/products/${id}`);
+            const jsonResult = await result.json()
+            setProduct(jsonResult);
+            setCurrentImg({img: jsonResult.thumbnail, index:0}); 
+        }
+        catch (error) {
+            toast.error("Error while fetching product");
+        } finally {
+            setLoading(false);
+        }  
+        
+    }
+
+    const renderRatingStars = () => {
+        const totalStars = 5;
+        const fullStars = Math.floor(product.rating);
+        const hasHalfStar = product.rating % 1 >= 0.5;
+
+        const emptyStars = totalStars - fullStars - (hasHalfStar ? 1 : 0);
+        const stars = [];
+
+        // full stars
+        for(let i = 1; i <= fullStars; i++) {
+            stars.push(<i className="fa fa-star"></i>)
+        } 
+
+        //half star
+        if(hasHalfStar) {
+            stars.push(<i className="fa-solid fa-star-half-stroke"></i>)
+        }
+
+        //empty stars
+        for(let i=1;i<= emptyStars;i++) {
+            stars.push(<i className="fa-regular fa-star"></i>)
+        }
+
+       return <span>
+        {stars}
+       </span>
+    }
+
+    useEffect(() => {
+        getProduct();
+    },[])
+
 
     return (
         <section className="product-info-section">
+            {loading ? <h2>Loading.....</h2> : <>
             <div className="product-info-details">
                 <div className="img-section">
                     <div className="product-img">
-                        {product.images.map((img, index) => (
-                          <img className={index == currentImg.index ? "active":""} src={img} alt="product Img" onClick={() => setCurrentImg({"img":img, "index": index})} />
-                        )) }
-                     
+                        {product?.images?.map((img, index) => (
+                            <img className={index == currentImg.index ? "active" : ""} src={img} alt="product Img" onClick={() => setCurrentImg({ "img": img, "index": index })} />
+                        ))}
+
                     </div>
 
                     <div className="thumbnail-img">
@@ -93,9 +86,9 @@ const ProductInfoDetail = () => {
                     <h2>{product.title}</h2>
                     <small id="brand">{product.brand}</small>
                     <div className="rating-review">
-                        <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                        {renderRatingStars()}
                         <span>{product.rating}</span>
-                        <span>({product.reviews.length} reviews)</span>
+                        <span>({product?.reviews?.length} reviews)</span>
                     </div>
                     <div className="price">
                         <strong>${product.price} </strong>
@@ -103,9 +96,9 @@ const ProductInfoDetail = () => {
                         <span id="discount"> {product.discountPercentage.toFixed(0)}% OFF</span>
                     </div>
                     <div className="availability">
-                        <span style={{color: product.availabilityStatus == "In Stock" ? "green": "red"}} id="dot">&bull;</span>
-                        <span>Availability : <span style={{color: product.availabilityStatus == "In Stock" ? "green": "red"}}>{product.availabilityStatus}</span></span>
-                          
+                        <span style={{ color: product.availabilityStatus == "In Stock" ? "green" : "red" }} id="dot">&bull;</span>
+                        <span>Availability : <span style={{ color: product.availabilityStatus == "In Stock" ? "green" : "red" }}>{product.availabilityStatus}</span></span>
+
                     </div>
                     <div className="product-description">
                         <p>{product.description}</p>
@@ -121,8 +114,8 @@ const ProductInfoDetail = () => {
                         <div className="return-details">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
                             <div className="return-info">
-                                <strong>7 Days Return</strong>
-                                <small>Easy return policy</small>
+                                <strong>{product.returnPolicy}</strong>
+                                <small>return policy</small>
                             </div>
                         </div>
                         <div className="payment-details">
@@ -140,9 +133,27 @@ const ProductInfoDetail = () => {
 
                     </div> : <button className="notify-me">Notify Me</button>}
 
-                
+
                 </div>
             </div>
+
+            <div className="product-meta-info">
+                <div className="menu-tabs">
+                    {MENU_ITEMS.map((item, index)=>(
+                      <button onClick={() => setActiveTab(index)}  className={index == activeTab ? "active" : ""}>{item}</button>
+                    ))}
+                    
+                </div>
+                    <hr/>
+
+                  <ProductSpecs product={product} />
+
+            </div>
+            
+            
+            </>
+            }
+            
 
         </section>
 

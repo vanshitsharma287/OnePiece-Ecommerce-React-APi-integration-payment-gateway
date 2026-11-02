@@ -1,3 +1,7 @@
+header a {
+    text-decoration: none;
+    color: #A2A29E;
+}
 header nav h1{
     color: #272C26;
 }
@@ -44,4 +48,9 @@ nav {
         order: -1;
     }
 }
+
+    .img-section {
+        
+    }
+
 

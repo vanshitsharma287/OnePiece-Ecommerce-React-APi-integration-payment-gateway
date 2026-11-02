@@ -5,7 +5,21 @@
     display: flex;
     flex-direction: column;
     row-gap: 8px;
+    height:320px;
+    overflow: auto;
 }
+.product-info-details .product-img {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    height: 320px;
+    overflow: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color:  #E8F0EC;
+}
+
+
 .product-info-details .product-img img{
     display: flex;
     flex-direction: column;
@@ -144,10 +158,14 @@
     color: white;
 }
 .notify-me {
-    padding: 1rem 0.5rem;
+    padding: 0.7rem 0.5rem;
     border: solid 1px;
     cursor: pointer;
     border-radius: 10px;
+    font-weight: 800;
+}
+.notify-me:hover{
+    background-color: rgba(136, 134, 130, 0.829);
 }
 @media (max-width: 1024px) {
     .product-info-details {
@@ -163,6 +181,7 @@
     }
     .img-section .product-img {
         flex-direction: row;
+        height: auto;
         gap: 1rem;
     }
     .btns {
@@ -182,4 +201,31 @@
         height: 80px;
     }
 
+}
+
+.product-meta-info{
+    margin-top: 3.5rem;
+}
+.menu-tabs{
+    display: flex;
+    gap: 2rem;
+    overflow: auto;
+    /* Hide scrollbar */
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE */
+}
+/* Chrome, Edge, Safari */
+.menu-tabs::-webkit-scrollbar {
+    display: none;
+}
+.menu-tabs button{
+    padding: 5px 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.menu-tabs button.active{
+    border-bottom: solid 2px blue;
+    font-weight: 800;
+    color: #454F8E;
 }
