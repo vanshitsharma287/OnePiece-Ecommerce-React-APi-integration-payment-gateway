@@ -37,6 +37,7 @@
      border-radius: 10px;
      width: 350px;
      height: 320px;
+     cursor:zoom-in;
 
 }
 .product-info-details {
@@ -228,4 +229,9 @@
     border-bottom: solid 2px blue;
     font-weight: 800;
     color: #454F8E;
+}
+.shipping-time{
+    color: #0E8C0E;
+    font-size: 14px;
+    font-weight: 700;
 }

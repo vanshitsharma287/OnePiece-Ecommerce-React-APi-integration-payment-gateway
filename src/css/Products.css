@@ -19,3 +19,35 @@
     background-color: #E8E8E8;
     margin-bottom: 10px;
 }
+.product-card__img{
+    position: relative;
+    width: 100%;
+}
+.product-card__img:hover{
+    .fa-angle-left, .fa-angle-right {
+        display: inline;
+    }
+}
+.card-info {
+    text-align: center;
+}
+ .fa-angle-left{
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    cursor: pointer;
+    color: #3a383844;
+    cursor: pointer;
+}
+.fa-angle-right{
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    right: 0%;
+    cursor: pointer;
+    color: #3a383844;
+}

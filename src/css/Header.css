@@ -38,6 +38,7 @@ nav {
     background: transparent;
     padding: 0.5rem;
     border-radius: 10px;
+    cursor: pointer;
 }
 @media (max-width: 768px) {
     nav{

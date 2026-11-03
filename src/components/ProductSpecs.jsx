@@ -71,10 +71,7 @@ const ProductSpecs = ({ product }) => {
             </div>
 
         </div>
-
         
-        
-      
     );
 };
 

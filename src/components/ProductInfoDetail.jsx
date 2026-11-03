@@ -24,12 +24,11 @@ const ProductInfoDetail = () => {
             const jsonResult = await result.json()
             setProduct(jsonResult);
             setCurrentImg({img: jsonResult.thumbnail, index:0}); 
+            setLoading(false);
         }
         catch (error) {
             toast.error("Error while fetching product");
-        } finally {
-            setLoading(false);
-        }  
+        }
         
     }
 
@@ -96,6 +95,7 @@ const ProductInfoDetail = () => {
                         <span>${calculateOriginalPrice()}</span>
                         <span id="discount"> {product.discountPercentage.toFixed(0)}% OFF</span>
                     </div>
+                    <div className="shipping-time">{product.shippingInformation}</div>
                     <div className="availability">
                         <span style={{ color: product.availabilityStatus == "In Stock" ? "green" : "red" }} id="dot">&bull;</span>
                         <span>Availability : <span style={{ color: product.availabilityStatus == "In Stock" ? "green" : "red" }}>{product.availabilityStatus}</span></span>
@@ -141,14 +141,15 @@ const ProductInfoDetail = () => {
             <div className="product-meta-info">
                 <div className="menu-tabs">
                     {MENU_ITEMS.map((item, index)=>(
-                      <button onClick={() => setActiveTab(index)}  className={index == activeTab ? "active" : ""}>{item == "Reviews" ? `${item} (${product.reviews.length})` : item}</button>
+                      <button onClick={() => setActiveTab(index)}  className={index == activeTab ? "active" : ""}>{item == "Reviews" ? `${item} (${product.reviews.length})` : item}
+                      </button>
                     ))}
                     
                 </div>
                     <hr/>
 
-                  {/* <ProductSpecs product={product} /> */}
-                  <ProductReviews product={product} />
+                  {activeTab == 0  && <ProductSpecs product={product} />}
+                  {activeTab == 1 && <ProductReviews product={product} />}
 
             </div>
             
