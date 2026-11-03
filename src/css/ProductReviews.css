@@ -113,4 +113,8 @@
     .rating-progress{
         width: 100%;
     }
+    .reviewer-meta-data{
+        font-size: 10px;
+        padding: 5px;
+    }
 }
