@@ -1,0 +1,109 @@
+.cart-info-details {
+    display: flex;
+    flex-direction: column;
+}
+.cart-info-details h2{
+    color: #052250;
+}
+
+.card-info h2,
+h3 {
+    color: #052250;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.card-img img {
+    width: 90px;
+    background-color: #F2F3F5;
+    border-radius: 10px;
+
+}
+
+.cart-cards {
+    height: 70vh;
+    overflow: auto;
+    margin-block: 1rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    gap: 10px;
+}
+
+.cart-cards::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cart-cards::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+
+.card {
+    border: solid 1px #ced2da;
+    border-radius: 10px;
+    display: flex;
+    padding: 0.4rem;
+    column-gap: 1rem;
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.card-heading i {
+    cursor: pointer;
+    font-size: 20px;
+
+}
+
+.card-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    align-items: flex-start;
+}
+
+.card-price-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.select-quantity-btns {
+    border: solid 1px #052250;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+.select-quantity-btns button {
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.select-quantity-btns i {
+    color: #052250;
+    cursor: pointer;
+}
+
+.select-quantity-btns span {
+    color: #052250;
+    font-weight: 900;
+}
+
+.card-price-button h4 {
+    color: #052250;
+}
+#empty-cart{
+    margin-top: 5rem;
+    text-align: center;
+}

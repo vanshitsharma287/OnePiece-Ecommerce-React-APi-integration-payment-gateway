@@ -3,6 +3,8 @@ import "../css/ProductInfoDetail.css";
 import { useParams } from "react-router";
 import ProductSpecs from "./ProductSpecs";
 import ProductReviews from "./ProductReviews";
+import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import toast from "react-hot-toast";
 const MENU_ITEMS=["Specification", `Reviews`];
 
 const ProductInfoDetail = () => {
@@ -63,6 +65,23 @@ const ProductInfoDetail = () => {
     useEffect(() => {
         getProduct();
     },[])
+
+    const handleCartProduct = () => {
+        const cart = getLocalStorage("cart");
+        if(cart?.length) {
+          const findProduct = cart.findIndex(pro => pro.id == product.id);
+          if(findProduct != -1) {
+            cart[findProduct].count++;
+            setLocalStorage("cart", cart);
+          } else {
+            cart.push({id: product.id, count:1});
+            setLocalStorage("cart", cart);
+          }
+        } else {
+            setLocalStorage("cart", [{id: product.id, count:1}]);
+        }
+        toast.success("Item added to cart");
+    }
 
 
     return (
@@ -129,7 +148,7 @@ const ProductInfoDetail = () => {
                     </div>
 
                     {product.availabilityStatus == "In Stock" ? <div className="btns">
-                        <button><i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
+                        <button onClick={() => handleCartProduct()}><i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
                         <button id="buyNow-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
 
                     </div> : <button className="notify-me">Notify Me</button>}

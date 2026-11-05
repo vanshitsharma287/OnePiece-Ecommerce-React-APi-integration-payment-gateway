@@ -24,7 +24,7 @@ const Header = () => {
                 </li>
                 <li><i className="fa-solid fa-magnifying-glass"></i></li>
                 <li><i className="fa-regular fa-user"></i></li>
-                <li><i className="fa-solid fa-bag-shopping"></i> (2)</li>
+                <li><Link to="/cart"><i className="fa-solid fa-bag-shopping"></i> (2)</Link></li>
             </ul>
 
             </nav> 

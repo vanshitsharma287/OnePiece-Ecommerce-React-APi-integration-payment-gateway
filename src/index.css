@@ -17,7 +17,7 @@ h1, h2, h3, .logo {
   font-family: 'Manrope', sans-serif;
 }
 
-.home, .product-info {
+.home, .product-info, .cart-info {
   padding: 0.8rem 2rem;
 }
 .breadcrumb-list {
