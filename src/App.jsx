@@ -2,6 +2,7 @@ import {Route,Routes} from "react-router";
 import Home from "./pages/home";
 import ProductInfo from "./pages/ProductInfo";
 import Cart from "./pages/cart";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
          <Route path = "/" element={<Home />} />
          <Route path = "/product/:id" element ={<ProductInfo />} />
          <Route path = "/cart" element ={<Cart />} />
+         <Route path = "/checkout" element ={<Checkout />} />
       </Routes>
 
     </div>

@@ -1,0 +1,95 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-group input {
+    width: 100%;
+    height: 66px;
+    padding: 27px 18px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    outline: none;
+    background: transparent;
+    color: #071e42;
+    font-size: 17px;
+    font-family: inherit;
+}
+
+.form-group label {
+    position: absolute;
+    top: 9px;
+    left: 18px;
+    font-size: 14px;
+    color: #667085;
+    pointer-events: none;
+}
+
+.form-group label span {
+    color: #e53935;
+}
+
+.form-group input:focus {
+    border-color: #052250;
+    box-shadow: 0 0 0 2px rgba(5, 34, 80, 0.08);
+}
+.number-pincode,.city-state {
+    display: flex;
+    gap: 10px;
+}
+.save-address{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.shipping-method-heading, .payment-method-heading {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-block: 1rem 0.5rem;
+}
+.shipping-method-heading i, .payment-method-heading i{
+   font-size: 20px;
+}
+.shipping-method-heading h4, .payment-method-heading h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #081E3D;
+}
+.shipping-methods, .payment-methods {
+    display: flex;
+    gap: 10px;
+}
+.shipping-methods label, .payment-methods label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1rem;
+    align-items: center;
+    gap: 10px;
+}
+.shipping-methods label div:nth-child(1), .payment-methods label div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shipping-methods label #free{
+    color:green;
+}
+.shipping-methods label p{
+    color: #081E3D;
+}
+.standard-delivery,.express-delivery,.cod-payment, .upi-payment {
+    width: 50%;
+    display: flex;
+    gap: 5px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 2px 0px;
+}
