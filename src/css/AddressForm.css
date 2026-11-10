@@ -72,6 +72,7 @@ form {
     padding-block: 1rem;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 .shipping-methods label div:nth-child(1), .payment-methods label div:nth-child(1) {
     display: flex;
@@ -92,4 +93,32 @@ form {
     border-radius: 10px;
     padding: 5px 10px;
     box-shadow: 0px 0px 2px 0px;
+    cursor: pointer;
+}
+.form-heading{
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 1rem;
+}
+.form-heading h4{
+    color: #052250;
+    font-size: 18px;
+    font-weight: 600;
+    
+}
+.form-heading i{
+    font-size: 20px;
+}
+form{
+    margin-top: 1rem;
+    border: 1px solid #d1d5db;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.payment-methods p{
+    color:#052250
+}
+.save-address label, .save-address input{
+    cursor: pointer;
 }

@@ -3,16 +3,28 @@ import Header from "../../components/common/Header";
 import CartSection from "../../components/CartSection";
 import BreadCrumb from "../../components/common/Breadcrumb";
 import "../../css/Checkout.css";
+import { useState } from "react";
 
 const Checkout = () => {
+    const [form, setForm] = useState({
+        "fullName": "",
+        "phoneNumber": "",
+        "pinCode": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "saveAddress": false,
+        "shippingMethod": "",
+        "paymentMethod": ""
+    });
     return(
         <section className="checkout">
             <Header />
-            <BreadCrumb />
+            
 
             <div className="checkout-section">
                 <div className="left-section">
-                   <AddressForm />
+                   <AddressForm  setForm={setForm} />
                 </div>
 
                 <div className="right-section">

@@ -2,3 +2,9 @@
     display: flex;
     gap: 20px;
 }
+.left-section {
+    width: 60%;
+}
+.right-section {
+    flex: 1;
+}

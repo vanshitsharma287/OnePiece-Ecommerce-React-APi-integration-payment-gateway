@@ -3,6 +3,7 @@ import "../css/CartSection.css";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import Loader from "./common/Loader";
 
 const SHIPPING_CHARGE = 2;
 
@@ -10,6 +11,7 @@ const CartSection = ({ mode, disable }) => {
     const navigate = useNavigate();
     const cart = getLocalStorage("cart") || [];
     const [cartItems, setCartItems] = useState([])
+    const [loading, setLoading] = useState(true);
 
 
     const getProduct = async (id) => {
@@ -31,6 +33,7 @@ const CartSection = ({ mode, disable }) => {
             cartProducts.push({ ...product, count: cart[i].count });
         }
         setCartItems(cartProducts);
+        setLoading(false);
 
     }
 
@@ -86,6 +89,8 @@ const CartSection = ({ mode, disable }) => {
     useEffect(() => {
         initializeCart();
     }, [])
+
+    if(loading) return <Loader />
 
     if (cartItems.length == 0) return <h2 id="empty-cart">No items to show</h2>
 
@@ -150,7 +155,8 @@ const CartSection = ({ mode, disable }) => {
                         <h3>Total</h3>
                         <h3>${total}</h3>
                     </div>
-                    <button onClick={() => navigate("/checkout")}>Proceed To Checkout</button>
+
+                    {mode == "checkout" ? <button>Proceed To Pay</button> : <button onClick={() => navigate("/checkout")}>Proceed To Checkout</button>}
                 </div>
             </div>
 
