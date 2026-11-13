@@ -4,10 +4,9 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Loader from "./common/Loader";
+import { SHIPPING_CHARGE, DELIVERY_CHARGE } from "../constants/cartConstants";
 
-const SHIPPING_CHARGE = 2;
-
-const CartSection = ({ mode, disable }) => {
+const CartSection = ({ mode, disable, shippingMethod }) => {
     const navigate = useNavigate();
     const cart = getLocalStorage("cart") || [];
     const [cartItems, setCartItems] = useState([])
@@ -98,7 +97,8 @@ const CartSection = ({ mode, disable }) => {
         return sum + (item.price*item.count);
     }, 0).toFixed(2);
     const shipping = subTotal >= 50 ? 0 : SHIPPING_CHARGE;
-    const total = (Number(subTotal) + shipping).toFixed(2);
+    const deliveryCharge = shippingMethod == "expressDelivery" ? DELIVERY_CHARGE : 0;
+    const total = (Number(subTotal) + shipping+ deliveryCharge).toFixed(2);
 
 
     return (
@@ -150,6 +150,12 @@ const CartSection = ({ mode, disable }) => {
                         <p>Shipping</p>
                         <h4>{shipping === 0 ? <span style={{color:"green"}}>Free</span> : `$${shipping.toFixed(2)}`}</h4>
                     </div>
+                    {mode == "checkout" && (
+                    <div className="delivery-charge">
+                        <p>Delivery Charges</p>
+                        <h4>{deliveryCharge === 0 ? <span style={{color:"green"}}>Free</span> : `$${deliveryCharge.toFixed(2)}`}</h4>
+                    </div>
+                    )}
                     <hr />
                     <div className="total">
                         <h3>Total</h3>

@@ -24,11 +24,11 @@ const Checkout = () => {
 
             <div className="checkout-section">
                 <div className="left-section">
-                   <AddressForm  setForm={setForm} />
+                   <AddressForm  setForm={setForm} form={form} />
                 </div>
 
                 <div className="right-section">
-                    <CartSection mode="checkout" disable={true} />
+                    <CartSection mode="checkout" disable={true} shippingMethod = {form.shippingMethod} />
                 </div>
                 
             </div>

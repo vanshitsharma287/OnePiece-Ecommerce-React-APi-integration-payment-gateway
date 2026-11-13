@@ -138,7 +138,8 @@
 
 .subtotal,
 .shipping,
-.total {
+.total,
+.delivery-charge {
     display: flex;
     justify-content: space-between;
     gap: 10px;
