@@ -125,3 +125,14 @@ form{
 .shipping-methods > div:has(input:checked), .payment-methods > div:has(input:checked) {
     border: 2px solid #052250;
 }
+@media(max-width:768px){
+    .number-pincode,.city-state{
+        flex-wrap: wrap;
+    }
+    .shipping-methods,.payment-methods {
+        flex-direction: column;
+    }
+    .cod-payment,.upi-payment,.express-delivery,.standard-delivery {
+        width: 100%;
+    }
+}

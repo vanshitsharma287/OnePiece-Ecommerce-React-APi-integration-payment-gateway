@@ -6,7 +6,7 @@ const Cart = () => {
     return(
         <section className="cart-info">
             <Header />
-            <BreadCrumb />
+            <BreadCrumb items={[{label: "Cart", to: "/cart", active: true}]}/>
             <CartSection />
 
 

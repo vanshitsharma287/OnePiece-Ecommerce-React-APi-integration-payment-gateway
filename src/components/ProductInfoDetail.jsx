@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import "../css/ProductInfoDetail.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ProductSpecs from "./ProductSpecs";
 import ProductReviews from "./ProductReviews";
 import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
 import toast from "react-hot-toast";
+import Loader from "./common/Loader";
+import { useCart } from "../hooks/useCart";
+import { useCurrency } from "../hooks/useCurrency";
+import { SHIPPING_CHARGE } from "../constants/cartConstants";
 const MENU_ITEMS=["Specification", `Reviews`];
 
-const ProductInfoDetail = () => {
+const ProductInfoDetail = ({ setBreadCrumbItems }) => {
+    const {setCartCount} = useCart();
+    const {calculateAmount} = useCurrency();
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState(0);
     const {id} = useParams();
+    const navigate= useNavigate();
+
 
     const [currentImg, setCurrentImg] = useState({ img: null, index: 0 });
 
@@ -25,6 +33,7 @@ const ProductInfoDetail = () => {
             const result = await fetch(`https://dummyjson.com/products/${id}`);
             const jsonResult = await result.json()
             setProduct(jsonResult);
+            setBreadCrumbItems([{label: jsonResult.title, to: `/product/${jsonResult.id}`, active:true}]);
             setCurrentImg({img: jsonResult.thumbnail, index:0}); 
             setLoading(false);
         }
@@ -71,6 +80,10 @@ const ProductInfoDetail = () => {
         if(cart?.length) {
           const findProduct = cart.findIndex(pro => pro.id == product.id);
           if(findProduct != -1) {
+            if(cart[findProduct].count == product.stock) {
+              toast.error(`You can only add ${product.stock} items`);
+              return;
+            }
             cart[findProduct].count++;
             setLocalStorage("cart", cart);
           } else {
@@ -80,13 +93,18 @@ const ProductInfoDetail = () => {
         } else {
             setLocalStorage("cart", [{id: product.id, count:1}]);
         }
-        toast.success("Item added to cart");
+        setCartCount(getLocalStorage("cart")?.length || 0);
+        toast.success("Item added to cart", {duration: "100"});
+    }
+
+    const handleBuyNow = (id) => {
+      navigate(`/checkout/${id}`);
     }
 
 
     return (
         <section className="product-info-section">
-            {loading ? <h2>Loading.....</h2> : <>
+            {loading ? <Loader /> : <>
             <div className="product-info-details">
                 <div className="img-section">
                     <div className="product-img">
@@ -110,8 +128,8 @@ const ProductInfoDetail = () => {
                         <span>({product?.reviews?.length} reviews)</span>
                     </div>
                     <div className="price">
-                        <strong>${product.price} </strong>
-                        <span>${calculateOriginalPrice()}</span>
+                        <strong>{calculateAmount(product.price)}</strong>
+                        <span>{calculateAmount(calculateOriginalPrice())}</span>
                         <span id="discount"> {product.discountPercentage.toFixed(0)}% OFF</span>
                     </div>
                     <div className="shipping-time">{product.shippingInformation}</div>
@@ -128,7 +146,7 @@ const ProductInfoDetail = () => {
                             <i class="fa-solid fa-truck-fast"></i>
                             <div className="shipping-info">
                                 <strong>Free Shipping</strong>
-                                <small>on orders over $50</small>
+                                <small>{`on orders over ${calculateAmount(SHIPPING_CHARGE)}`}</small>
                             </div>
                         </div>
                         <div className="return-details">
@@ -147,9 +165,9 @@ const ProductInfoDetail = () => {
                         </div>
                     </div>
 
-                    {product.availabilityStatus == "In Stock" ? <div className="btns">
+                    {product.availabilityStatus != "Out of Stock" ? <div className="btns">
                         <button onClick={() => handleCartProduct()}><i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-                        <button id="buyNow-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
+                        <button id="buyNow-btn" onClick={() => handleBuyNow(product.id)}><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
 
                     </div> : <button className="notify-me">Notify Me</button>}
 

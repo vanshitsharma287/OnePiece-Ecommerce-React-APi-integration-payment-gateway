@@ -7,12 +7,11 @@ import Checkout from "./pages/Checkout";
 function App() {
   return (
     <div className="main-container">
-      
       <Routes>
          <Route path = "/" element={<Home />} />
          <Route path = "/product/:id" element ={<ProductInfo />} />
          <Route path = "/cart" element ={<Cart />} />
-         <Route path = "/checkout" element ={<Checkout />} />
+         <Route path = "/checkout/:id?" element ={<Checkout />} />
       </Routes>
 
     </div>

@@ -2,12 +2,17 @@ import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
 import "../css/CartSection.css";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Loader from "./common/Loader";
 import { SHIPPING_CHARGE, DELIVERY_CHARGE } from "../constants/cartConstants";
+import { useCart } from "../hooks/useCart";
+import { useCurrency } from "../hooks/useCurrency";
 
-const CartSection = ({ mode, disable, shippingMethod }) => {
+const CartSection = ({ mode, disable, shippingMethod, handleFormSubmit }) => {
+    const {setCartCount} = useCart();
+    const {calculateAmount} = useCurrency();
     const navigate = useNavigate();
+    const {id} = useParams();
     const cart = getLocalStorage("cart") || [];
     const [cartItems, setCartItems] = useState([])
     const [loading, setLoading] = useState(true);
@@ -37,7 +42,7 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
     }
 
     const calProductTotal = (product) => {
-        return (product.price * product.count).toFixed(2);
+        return calculateAmount(product.price * product.count);
     }
 
     const manageQuantity = (action, product) => {
@@ -70,6 +75,7 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
                 return item;
             });
             setLocalStorage("cart", updatedLocalStorage);
+            setCartCount(getLocalStorage("cart")?.length || 0);
             setCartItems(newCart);
 
         }
@@ -82,11 +88,22 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
         setCartItems(newCart);
         const updatedLocalStorage = newCart.map(item => ({ id: item.id, count: item.count }));
         setLocalStorage("cart", updatedLocalStorage);
+        setCartCount(getLocalStorage("cart")?.length || 0);
+    }
+
+    const handleSingleProduct = async () => {
+       const product = await getProduct(id);
+       setCartItems([{...product, count:1}]);
+       setLoading(false);
     }
 
 
     useEffect(() => {
-        initializeCart();
+        if(id) {
+          handleSingleProduct();
+        } else {
+           initializeCart();
+        }
     }, [])
 
     if(loading) return <Loader />
@@ -95,10 +112,11 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
 
     const subTotal = cartItems.reduce((sum, item) => {
         return sum + (item.price*item.count);
-    }, 0).toFixed(2);
+    }, 0);
+
     const shipping = subTotal >= 50 ? 0 : SHIPPING_CHARGE;
     const deliveryCharge = shippingMethod == "expressDelivery" ? DELIVERY_CHARGE : 0;
-    const total = (Number(subTotal) + shipping+ deliveryCharge).toFixed(2);
+    const total = calculateAmount(Number(subTotal) + shipping+ deliveryCharge);
 
 
     return (
@@ -107,7 +125,7 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
             
             <div className={`cart-info-section ${mode == "checkout" ? "checkout-layout" : ""}`}>
 
-                <div className={`cart-cards ${mode == "checkout" ? "checkout-layout" : ""}`}>
+                <div className={`cart-cards ${mode == "checkout" ? "checkout-layout" : ""} ${id ? "single-product" : ""}`}>
                     {cartItems.map(itm => (
 
                         <div className="card">
@@ -120,13 +138,13 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
                                     {!disable && <i onClick={() => handleDelete(itm)} class="fa-solid fa-trash"></i>}
                                 </div>
                                 <div className="card-price-button">
-                                    <h4>${itm.price}</h4>
+                                    <h4>{calculateAmount(itm.price)}</h4>
                                         <div className="select-quantity-btns">
                                             {!disable && <button onClick={() => manageQuantity("minus", itm)} id="subtract-btn"><i class="fa-solid fa-minus"></i></button>}
                                             <span>{itm.count}</span>
                                             {!disable && <button onClick={() => manageQuantity("plus", itm)} id="add-btn"><i class="fa-solid fa-plus"></i></button>}
                                         </div>
-                                    <h4>${calProductTotal(itm)}</h4>
+                                    <h4>{calProductTotal(itm)}</h4>
 
                                 </div>
                             </div>
@@ -144,25 +162,25 @@ const CartSection = ({ mode, disable, shippingMethod }) => {
                     <h2>Order Summary</h2>
                     <div className="subtotal">
                         <p>Subtotal</p>
-                        <h4>${subTotal}</h4>
+                        <h4>{calculateAmount(subTotal)}</h4>
                     </div>
                     <div className="shipping">
                         <p>Shipping</p>
-                        <h4>{shipping === 0 ? <span style={{color:"green"}}>Free</span> : `$${shipping.toFixed(2)}`}</h4>
+                        <h4>{shipping === 0 ? <span style={{color:"green"}}>Free</span> : calculateAmount(shipping)}</h4>
                     </div>
                     {mode == "checkout" && (
                     <div className="delivery-charge">
                         <p>Delivery Charges</p>
-                        <h4>{deliveryCharge === 0 ? <span style={{color:"green"}}>Free</span> : `$${deliveryCharge.toFixed(2)}`}</h4>
+                        <h4>{deliveryCharge === 0 ? <span style={{color:"green"}}>Free</span> : calculateAmount(deliveryCharge)}</h4>
                     </div>
                     )}
                     <hr />
                     <div className="total">
                         <h3>Total</h3>
-                        <h3>${total}</h3>
+                        <h3>{total}</h3>
                     </div>
 
-                    {mode == "checkout" ? <button>Proceed To Pay</button> : <button onClick={() => navigate("/checkout")}>Proceed To Checkout</button>}
+                    {mode == "checkout" ? <button onClick={handleFormSubmit}>Proceed To Pay</button> : <button onClick={() => navigate("/checkout")}>Proceed To Checkout</button>}
                 </div>
             </div>
 

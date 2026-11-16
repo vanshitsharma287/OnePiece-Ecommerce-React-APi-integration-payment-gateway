@@ -1,13 +1,17 @@
+import { useEffect } from "react";
 import { DELIVERY_CHARGE } from "../constants/cartConstants";
 import "../css/AddressForm.css";
-const AddressForm = ({ setForm, form }) => {
+import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import { useCurrency } from "../hooks/useCurrency";
+const AddressForm = ({ setForm, form, formRef, setShowOrderPlaced }) => {
+    const  {calculateAmount} = useCurrency();
     const handleValueChange = (e) => {
         const { name, value } = e.target;
         if (name == "phoneNumber" || name == "pinCode") {
             const regex = /^[0-9]*$/
             if (!regex.test(value)) return;
         }
-        if (name == "fullName" || name == "address" || name == "city" || name == "state") {
+        if (name == "fullName" || name == "city" || name == "state") {
             const regex = /^[a-zA-Z\s]*$/;
             if (!regex.test(value)) return;
         }
@@ -15,8 +19,26 @@ const AddressForm = ({ setForm, form }) => {
         setForm(prev => ({ ...prev, [name]: value }));
     }
 
+
+    useEffect(() => {
+        const savedAddress = getLocalStorage("address");
+        if (savedAddress) {
+            setForm(prev => ({ ...prev, ...savedAddress }));
+        }
+    }, []);
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (form.saveAddress == true) {
+            setLocalStorage("address", { fullName: form.fullName, phoneNumber: form.phoneNumber, pinCode: form.pinCode, address: form.address, city: form.city, state: form.state, saveAddress: true });
+        }
+        setShowOrderPlaced(true);
+        localStorage.removeItem("cart");
+    }
+
     return (
-        <form>
+        <form ref={formRef} onSubmit={handleSubmit}>
             <div className="form-heading">
                 <i class="fa-solid fa-location-dot"></i>
                 <div>
@@ -123,7 +145,7 @@ const AddressForm = ({ setForm, form }) => {
                 </div>
             </div>
             <div className="save-address">
-                <input type="checkbox" id="saveAddress" value={form.saveAddresss} name="saveAddress" required onChange={(e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.checked }))} />
+                <input type="checkbox" id="saveAddress" checked={form.saveAddress} name="saveAddress" onChange={(e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.checked }))} />
                 <label htmlFor="saveAddress">Save this address for next time</label>
             </div>
             <hr />
@@ -160,7 +182,7 @@ const AddressForm = ({ setForm, form }) => {
                                 <small>1-2 business days</small>
                             </div>
                         </div>
-                        <span>${DELIVERY_CHARGE}</span>
+                        <span>{calculateAmount(DELIVERY_CHARGE)}</span>
                     </label>
                 </div>
             </div>

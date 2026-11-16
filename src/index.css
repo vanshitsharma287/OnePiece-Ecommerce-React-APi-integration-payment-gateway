@@ -26,7 +26,22 @@ h1, h2, h3, .logo {
 
 .breadcrumb-list {
     display: flex;
-    column-gap: 2.3rem;
+    column-gap: 1.5rem;
+}
+.breadcrumb-list li a {
+    text-decoration: none;
+    color:#A2A29E;
+}
+
+.breadcrumb-list li a.active {
+    text-decoration: underline;
+    color: black;
+}
+
+.breadcrumb-list li a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: black;
 }
 
 .breadcrumb-list #list {

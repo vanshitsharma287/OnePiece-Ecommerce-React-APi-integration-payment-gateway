@@ -1,36 +1,59 @@
 import { Link } from "react-router";
 import "../../css/Header.css"
+import { useCart } from "../../hooks/useCart";
+import { useCurrency } from "../../hooks/useCurrency";
+import { setLocalStorage } from "../../utils/LocalStorage";
+import { useEffect, useRef, useState } from "react";
 
-const Header = () => {
+const Header = ({ disabledSearch = true, setSearchValue, searchValue }) => {
+    const searchRef = useRef(null);
+    const [showSearch, setShowSearch] = useState(false);
+    const { cartCount } = useCart();
+    const { currency, setCurrency } = useCurrency();
+
+    const handleCurrencyChange = (e) => {
+        setCurrency(e.target.value);
+        setLocalStorage("currency", e.target.value);
+    }
+
+    useEffect(() => {
+        if (showSearch) {
+            searchRef.current?.focus();
+        }
+    }, [showSearch]);
 
     return (
-         <header>
-           <nav>
-            <ul className="nav-options">
-                <li><Link to="/">SHOP</Link></li>
-                <li>COLLECTION</li>
-                <li>ABOUT</li>
-            </ul>
+        <header>
+            <nav>
+                <ul className="nav-options">
+                    <li><Link to="/">SHOP</Link></li>
+                    <li>COLLECTION</li>
+                    <li>ABOUT</li>
+                </ul>
 
-            <h1>OnePiece</h1>
+                <h1 onClick={() => window.location.href = "/"}>OnePiece</h1>
 
-             <ul className="nav-icons">
-                <li>
-                    <select>
-                        <option>US $</option>
-                        <option>INR ₹</option>
-                        <option>Euro €</option>
-                    </select>
-                </li>
-                <li><i className="fa-solid fa-magnifying-glass"></i></li>
-                <li><i className="fa-regular fa-user"></i></li>
-                <li><Link to="/cart"><i className="fa-solid fa-bag-shopping"></i> (2)</Link></li>
-            </ul>
+                <ul className="nav-icons">
+                    <li>
+                        {showSearch && <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} ref={searchRef} type="search" placeholder="Search" />}
+                        {!showSearch && !disabledSearch && <i onClick={() => {
+                            setShowSearch(true);
+                        }} className="fa-solid fa-magnifying-glass"></i>}
+                    </li>
+                    <li><Link to="/cart"><i className="fa-solid fa-bag-shopping"></i> ({cartCount})</Link></li>
+                    <li>
+                        <select value={currency} onChange={(e) => handleCurrencyChange(e)}>
+                            <option value="dollar">US $</option>
+                            <option value="rupee">INR ₹</option>
+                            <option value="euro">Euro €</option>
+                        </select>
+                    </li>
+                </ul>
 
-            </nav> 
+            </nav>
 
-         </header>
-         
+        </header>
+
     )
 }
 export default Header;

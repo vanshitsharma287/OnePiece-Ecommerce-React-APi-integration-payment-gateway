@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router";
 import "../css/Products.css";
 import { useEffect, useState } from "react";
+import { useCurrency } from "../hooks/useCurrency";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
     const [imageIndex, setImageIndex] = useState(0);
+    const {calculateAmount} = useCurrency();
 
     const images = product.images || [];
     const selectedImage = images[imageIndex];
@@ -58,7 +60,7 @@ const ProductCard = ({ product }) => {
                 onClick={handleProductClick}
             >
                 <h4>{product.title}</h4>
-                <small>$ {product.price}</small>
+                <small>{calculateAmount(product.price)}</small>
             </div>
         </div>
     );

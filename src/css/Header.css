@@ -4,6 +4,7 @@ header a {
 }
 header nav h1{
     color: #272C26;
+    cursor: pointer;
 }
 
 header nav ul li{
@@ -11,7 +12,10 @@ header nav ul li{
     list-style: none;
     cursor: pointer;
 }
-header nav ul li:hover{
+header nav ul li i:hover{
+    color:#A2A29E;
+}
+header nav ul li:hover, header nav ul li a:hover{
     color:#c2c2ab;
 
 }
@@ -32,6 +36,12 @@ nav {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+.nav-icons li input{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: solid 1px black;
 }
 .nav-icons li select{
     outline: none;
