@@ -3,7 +3,7 @@ import "../css/ProductInfoDetail.css";
 import { useNavigate, useParams } from "react-router";
 import ProductSpecs from "./ProductSpecs";
 import ProductReviews from "./ProductReviews";
-import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
 import toast from "react-hot-toast";
 import Loader from "./common/Loader";
 import { useCart } from "../hooks/useCart";

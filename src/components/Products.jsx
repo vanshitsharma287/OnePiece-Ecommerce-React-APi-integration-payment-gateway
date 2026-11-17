@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import "../css/Products.css";
 import { useEffect, useState } from "react";
 import { useCurrency } from "../hooks/useCurrency";
-import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();

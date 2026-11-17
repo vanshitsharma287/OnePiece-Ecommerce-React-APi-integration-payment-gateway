@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BreadCrumb from "../../components/common/Breadcrumb";
 import Header from "../../components/common/Header";
 import Products from "../../components/Products";
-import { getLocalStorage } from "../../utils/LocalStorage";
+import { getLocalStorage } from "../../utils/localStorage";
 import toast from "react-hot-toast";
 
 const Favourites = () => {

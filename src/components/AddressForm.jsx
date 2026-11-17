@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { DELIVERY_CHARGE } from "../constants/cartConstants";
 import "../css/AddressForm.css";
-import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
 import { useCurrency } from "../hooks/useCurrency";
 const AddressForm = ({ setForm, form, formRef, setShowOrderPlaced }) => {
     const  {calculateAmount} = useCurrency();

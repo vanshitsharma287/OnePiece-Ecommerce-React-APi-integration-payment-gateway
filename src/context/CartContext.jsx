@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage } from "../utils/localStorage";
 
 export const CartContext = createContext(null);
 

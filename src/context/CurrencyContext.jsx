@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { convertDollarToEuro, convertDollarToRuppees } from "../utils/currency";
-import { getLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage } from "../utils/localStorage";
 
  export const CurrencyContext = createContext(null);
 

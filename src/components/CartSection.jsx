@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
 import "../css/CartSection.css";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";

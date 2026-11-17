@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import "../../css/Header.css"
 import { useCart } from "../../hooks/useCart";
 import { useCurrency } from "../../hooks/useCurrency";
-import { setLocalStorage } from "../../utils/LocalStorage";
+import { setLocalStorage } from "../../utils/localStorage";
 import { useEffect, useRef, useState } from "react";
 
 const Header = ({ disabledSearch = true, setSearchValue, searchValue }) => {
