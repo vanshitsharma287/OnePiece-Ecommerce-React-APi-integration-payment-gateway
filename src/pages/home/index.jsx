@@ -46,7 +46,10 @@ const Home = () => {
 
   useEffect(() => {
     if(searchValue.length > 0){
-      searchProducts();
+      const debounce = setTimeout(() => {
+        searchProducts();
+      }, 500);
+      return () => clearTimeout(debounce);
     } else {
       getAllProducts();
     }

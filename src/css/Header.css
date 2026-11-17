@@ -59,9 +59,14 @@ nav {
         order: -1;
     }
 }
-
-    .img-section {
-        
+@media (max-width : 480px) {
+    /* .nav-options{
+        flex-direction: column;
+        gap: 5px; */
+   
+    .nav-icons{
+        flex-wrap: wrap-reverse;
+        gap: 5px;
     }
-
+}
 

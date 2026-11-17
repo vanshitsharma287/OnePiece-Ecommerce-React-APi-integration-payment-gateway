@@ -3,6 +3,7 @@ import Home from "./pages/home";
 import ProductInfo from "./pages/ProductInfo";
 import Cart from "./pages/cart";
 import Checkout from "./pages/Checkout";
+import Favourites from "./pages/Favourites";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
          <Route path = "/product/:id" element ={<ProductInfo />} />
          <Route path = "/cart" element ={<Cart />} />
          <Route path = "/checkout/:id?" element ={<Checkout />} />
+         <Route path = "/favourites" element ={<Favourites />} />
       </Routes>
 
     </div>

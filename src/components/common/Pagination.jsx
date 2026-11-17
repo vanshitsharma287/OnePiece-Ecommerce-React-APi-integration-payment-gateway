@@ -16,6 +16,9 @@ const Pagination = (props) => {
           currentPage == 1 ? handlePageChange(totalPages) : handlePageChange(currentPage-1)
         }
     }
+    if(totalItem == 0) {
+        return null;
+    }
 
     return(
         <section className="pagination">

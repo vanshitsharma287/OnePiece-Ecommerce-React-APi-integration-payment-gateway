@@ -19,7 +19,7 @@ h1, h2, h3, .logo {
 
 .home,
 .product-info,
-.cart-info,.checkout {
+.cart-info,.checkout,.favourites {
     padding-inline: clamp(12px, 4vw, 50px);
     padding-block: clamp(12px, 1.5vw, 20px);
 }
@@ -47,7 +47,7 @@ h1, h2, h3, .logo {
 .breadcrumb-list #list {
     list-style: none;
 }
-.product-info .breadcrumb {
+.product-info .breadcrumb,.favourites .breadcrumb {
   margin-top: 3.5rem;
 }
 .loader {

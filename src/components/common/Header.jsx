@@ -27,8 +27,8 @@ const Header = ({ disabledSearch = true, setSearchValue, searchValue }) => {
             <nav>
                 <ul className="nav-options">
                     <li><Link to="/">SHOP</Link></li>
-                    <li>COLLECTION</li>
-                    <li>ABOUT</li>
+                    <li><Link to="/favourites">FAVOURITES</Link></li>
+                    <li><Link>ABOUT</Link></li>
                 </ul>
 
                 <h1 onClick={() => window.location.href = "/"}>OnePiece</h1>

@@ -2,17 +2,39 @@ import { useNavigate } from "react-router";
 import "../css/Products.css";
 import { useEffect, useState } from "react";
 import { useCurrency } from "../hooks/useCurrency";
+import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
     const [imageIndex, setImageIndex] = useState(0);
     const {calculateAmount} = useCurrency();
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const toggleFavorite = () => {
+        setIsFavorite(!isFavorite);
+        const favourites = getLocalStorage("favourites");
+        if(favourites?.length) {
+            if(favourites.includes(product.id)){
+                const newFav = favourites.filter(fav => fav != product.id);
+                setLocalStorage("favourites", newFav);
+            } else{
+                favourites.push(product.id);
+                setLocalStorage("favourites", favourites);
+            } 
+
+        } else{
+            setLocalStorage("favourites", [product.id])
+        }
+    }; 
 
     const images = product.images || [];
     const selectedImage = images[imageIndex];
 
     useEffect(() => {
         setImageIndex(0);
+        const fav= getLocalStorage("favourites");
+        if(fav?.length && fav.includes(product.id)) setIsFavorite(true);
+        else setIsFavorite(false);
     }, [product]);
 
     const handleImgChange = (action) => {
@@ -30,7 +52,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="product-card">
             <div className="product-card__img">
-
+               <i  className={`${isFavorite ? "fa-solid active":"fa-regular"} fa-heart`} onClick={toggleFavorite}></i>
                 {images.length > 1 && (
                     <i
                         className="fa-solid fa-angle-left"
@@ -68,6 +90,12 @@ const ProductCard = ({ product }) => {
 
 const Products = (props) => {
     const { products } = props;
+    if(products.length === 0) {
+         return <div className="no-products">
+                    <h3>No products found</h3>
+                </div>
+    }
+
     return (
         <section className="products">
             {products.map(pro => (
