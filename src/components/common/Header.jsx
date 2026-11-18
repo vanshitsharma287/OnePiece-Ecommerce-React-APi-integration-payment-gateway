@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Header = ({ disabledSearch = true, setSearchValue, searchValue }) => {
     const searchRef = useRef(null);
-    const [showSearch, setShowSearch] = useState(false);
+    const [showSearch, setShowSearch] = useState(Boolean(searchValue));
     const { cartCount } = useCart();
     const { currency, setCurrency } = useCurrency();
 
@@ -28,7 +28,7 @@ const Header = ({ disabledSearch = true, setSearchValue, searchValue }) => {
                 <ul className="nav-options">
                     <li><Link to="/">SHOP</Link></li>
                     <li><Link to="/favourites">FAVOURITES</Link></li>
-                    <li><Link>ABOUT</Link></li>
+                    <li><Link to="/about">ABOUT</Link></li>
                 </ul>
 
                 <h1 onClick={() => window.location.href = "/"}>OnePiece</h1>
